@@ -121,20 +121,32 @@ async function example() {
             let content
             let type: MessageType
             const rand = Math.random()
-            if (rand > 0.66) { // choose at random
-                content = 'hello!' // send a "hello!" & quote the message recieved
+            console.log(m.message.conversation)
+            if (m.message.conversation=='ATR')
+            {
+                content = 'Que onda ameooooo, todo peola?'// send a "hello!" & quote the message recieved
                 type = MessageType.text
-            } else if (rand > 0.33) { // choose at random
-                content = { degreesLatitude: 32.123123, degreesLongitude: 12.12123123 }
-                type = MessageType.location
-            } else {
-                content = fs.readFileSync('./Media/ma_gif.mp4') // load the gif
-                options.mimetype = Mimetype.gif
-                type = MessageType.video
+
             }
+            else
+            {
+                if (rand > 0.66) { // choose at random
+                    content = 'hello!' // send a "hello!" & quote the message recieved
+                    type = MessageType.text
+                } else if (rand > 0.33) { // choose at random
+                    content = { degreesLatitude: 32.123123, degreesLongitude: 12.12123123 }
+                    type = MessageType.location
+                } else {
+                    content = fs.readFileSync('./Media/ma_gif.mp4') // load the gif
+                    options.mimetype = Mimetype.gif
+                    type = MessageType.video
+                }
+            }
+
+
             const response = await conn.sendMessage(m.key.remoteJid, content, type, options)
             console.log("sent message with ID '" + response.key.id + "' successfully")
-        }, 3 * 1000)
+        },  1500)
     })
 
     /* example of custom functionality for tracking battery */
